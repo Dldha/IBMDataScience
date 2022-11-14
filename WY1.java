@@ -4,10 +4,12 @@ import com.misys.equation.common.access.EquationStandardSession;
 import com.misys.equation.common.access.EquationStandardTransaction;
 import com.misys.equation.common.files.JournalHeader;
 import com.misys.equation.common.internal.eapi.core.EQException;
+import com.misys.equation.common.utilities.EquationLogger;
 import com.misys.equation.function.adaptor.AbstractFunctionAdaptor;
 import com.misys.equation.function.runtime.UserData;
 import com.misys.equation.function.runtime.UserModifyData;
 import com.misys.equation.function.tools.FunctionRuntimeToolbox;
+import com.misys.equation.function.adaptor.AbstractInputFieldSetAdaptor;
 
 /** 
  * Implementation for WY1
@@ -24,6 +26,7 @@ public class WY1 extends AbstractFunctionAdaptor {
 	/**
 	 * Allows bank to perform database retrieval.
 	 */
+	private static final EquationLogger LOG = new EquationLogger(WY1.class);
 	@Override
 	public String postLoad(UserModifyData userModifyData) {
 		try
@@ -33,7 +36,7 @@ public class WY1 extends AbstractFunctionAdaptor {
 			transaction.setFieldValue("GZDLP", userModifyData.rtvFieldInputValue("WY1_DLP"));
 			transaction.setFieldValue("GZDLR", userModifyData.rtvFieldInputValue("WY1_DLR"));			
 			transaction.setFieldValue("GZBRNM", userModifyData.rtvFieldDbValue("WY1_BRNM"));
-			transaction.setFieldValue("GZEXT", userModifyData.rtvFieldDbValue("N"));
+			transaction.setFieldValue("GZEXT", "N");
 			userModifyData.getUserAccessHandler().getEquationUser().getSession().retrieveEquationTransaction(transaction);
 
 			loadData(transaction, userModifyData);
@@ -51,7 +54,7 @@ public class WY1 extends AbstractFunctionAdaptor {
 		}
 
 	
-		return null;
+		return "A";
 	}
 	/**
 	 * Return an Equation Standard Transaction for the RDW transaction
@@ -86,10 +89,10 @@ public class WY1 extends AbstractFunctionAdaptor {
 		userData.chgFieldDbValue("WY1_GRP", transaction.getFieldValue("GZGRP"));
 		
 		userData.chgFieldDbValue("WY1_TDT", transaction.getFieldValue("GZTDT"));
-		userData.chgFieldDbValue("WY1_PCCY", transaction.getFieldValue("GZPCCY"));
-		userData.chgFieldDbValue("WY1_CCY1", transaction.getFieldValue("GZCCY1"));
-		userData.chgFieldDbValue("WY1_CCY2", transaction.getFieldValue("GZCCY2"));
-		userData.chgFieldDbValue("WY1_DLA", transaction.getFieldValue("GZDLA"));
+		userData.chgFieldDbValue("ZLPCCY", transaction.getFieldValue("GZPCCY"));
+		userData.chgFieldDbValue("ZLCCY1", transaction.getFieldValue("GZCCY1"));
+		userData.chgFieldDbValue("ZLCCY2", transaction.getFieldValue("GZCCY2"));
+		userData.chgFieldDbValue("ZLDLA", transaction.getFieldValue("GZDLA"));
 		userData.chgFieldDbValue("WY1_IA", transaction.getFieldValue("GZIA"));
 		userData.chgFieldDbValue("WY1_TIA", transaction.getFieldValue("GZTIA"));
 		userData.chgFieldDbValue("WY1_MDT", transaction.getFieldValue("GZMDT"));
@@ -102,13 +105,13 @@ public class WY1 extends AbstractFunctionAdaptor {
 		userData.chgFieldDbValue("WY1_CBRR", transaction.getFieldValue("GZCBRR"));
 		userData.chgFieldDbValue("WY1_CDRR", transaction.getFieldValue("GZCDRR"));
 		userData.chgFieldDbValue("WY1_CRTM", transaction.getFieldValue("GZCRTM"));
-		userData.chgFieldDbValue("WY1_IRT", transaction.getFieldValue("GZIRT"));
+		userData.chgFieldDbValue("WY1_CIRT", transaction.getFieldValue("GZCIRT"));
 		userData.chgFieldDbValue("WY1_CPEG", transaction.getFieldValue("GZCPEG"));
-		userData.chgFieldDbValue("WY1_EBRR", transaction.getFieldValue("GZEBRR"));
-		userData.chgFieldDbValue("WY1_EDRR", transaction.getFieldValue("GZEDRR"));
-		userData.chgFieldDbValue("WY1_ERTM", transaction.getFieldValue("GZERTM"));
-		userData.chgFieldDbValue("WY1_EART", transaction.getFieldValue("GZEART"));
-		userData.chgFieldDbValue("WY1_EPEG", transaction.getFieldValue("GZEPEG"));
+		userData.chgFieldDbValue("ZLEBRR", transaction.getFieldValue("GZEBRR"));
+		userData.chgFieldDbValue("ZLEDRR", transaction.getFieldValue("GZEDRR"));
+		userData.chgFieldDbValue("ZLERTM", transaction.getFieldValue("GZERTM"));
+		userData.chgFieldDbValue("ZLEART", transaction.getFieldValue("GZEART"));
+		userData.chgFieldDbValue("ZLEPEG", transaction.getFieldValue("GZEPEG"));
 		userData.chgFieldDbValue("WY1_CCD1", transaction.getFieldValue("GZCCD1"));
 		userData.chgFieldDbValue("WY1_PAM1", transaction.getFieldValue("GZPAM1"));
 		userData.chgFieldDbValue("WY1_CCD2", transaction.getFieldValue("GZCCD2"));
@@ -116,20 +119,20 @@ public class WY1 extends AbstractFunctionAdaptor {
 		userData.chgFieldDbValue("WY1_CCD3", transaction.getFieldValue("GZCCD3"));
 		userData.chgFieldDbValue("WY1_PAM3", transaction.getFieldValue("GZPAM3"));
 		userData.chgFieldDbValue("WY1_WA", transaction.getFieldValue("GZWA"));
-		userData.chgFieldDbValue("WY1_XM", transaction.getFieldValue("GZXM"));
+		userData.chgFieldDbValue("WY1_XMM", transaction.getFieldValue("GZXMM"));
 		userData.chgFieldDbValue("WY1_DPAM", transaction.getFieldValue("GZDPAM"));
 		userData.chgFieldDbValue("WY1_DIAM", transaction.getFieldValue("GZDIAM"));
 		userData.chgFieldDbValue("WY1_WPAM", transaction.getFieldValue("GZWPAM"));
 		userData.chgFieldDbValue("WY1_WIAM", transaction.getFieldValue("GZWIAM"));
-		userData.chgFieldDbValue("WY1_CWF1", transaction.getFieldValue("GZCWF1"));
-		userData.chgFieldDbValue("WY1_CWF2", transaction.getFieldValue("GZCWF2"));
-		userData.chgFieldDbValue("WY1_AB", transaction.getFieldValue("GZAB"));
-		userData.chgFieldDbValue("WY1_AN", transaction.getFieldValue("GZAN"));
-		userData.chgFieldDbValue("WY1_AS", transaction.getFieldValue("GZAS"));
+		userData.chgFieldDbValue("ZLCWF1", transaction.getFieldValue("GZCWF1"));
+		userData.chgFieldDbValue("ZLCWF2", transaction.getFieldValue("GZCWF2"));
+		userData.chgFieldDbValue("ZLAB", transaction.getFieldValue("GZAB"));
+		userData.chgFieldDbValue("ZLAN", transaction.getFieldValue("GZAN"));
+		userData.chgFieldDbValue("ZLAS", transaction.getFieldValue("GZAS"));
 		userData.chgFieldDbValue("WY1_EAN", transaction.getFieldValue("GZEAN"));
-		userData.chgFieldDbValue("WY1_AB1", transaction.getFieldValue("GZAB1"));
-		userData.chgFieldDbValue("WY1_AN1", transaction.getFieldValue("GZAN1"));
-		userData.chgFieldDbValue("WY1_AS1", transaction.getFieldValue("GZAS1"));
+		userData.chgFieldDbValue("ZLAB1", transaction.getFieldValue("GZAB1"));
+		userData.chgFieldDbValue("ZLAN1", transaction.getFieldValue("GZAN1"));
+		userData.chgFieldDbValue("ZLAS1", transaction.getFieldValue("GZAS1"));
 		userData.chgFieldDbValue("WY1_EAN1", transaction.getFieldValue("GZEAN1"));
 		userData.chgFieldDbValue("WY1_OAB", transaction.getFieldValue("GZOAB"));
 		userData.chgFieldDbValue("WY1_OAN", transaction.getFieldValue("GZOAN"));
@@ -137,10 +140,11 @@ public class WY1 extends AbstractFunctionAdaptor {
 		userData.chgFieldDbValue("WY1_OAB1", transaction.getFieldValue("GZOAB1"));
 		userData.chgFieldDbValue("WY1_OAN1", transaction.getFieldValue("GZOAN1"));
 		userData.chgFieldDbValue("WY1_OAS1", transaction.getFieldValue("GZOAS1"));		
-		userData.chgFieldDbValue("WY1_PRTC", transaction.getFieldValue("GZPRTC"));
+		userData.chgFieldDbValue("ZLPRTC", transaction.getFieldValue("GZPRTC"));
 		userData.chgFieldDbValue("WY1_CANR", transaction.getFieldValue("GZCANR"));
 		userData.chgFieldDbValue("WY1_YPSF", transaction.getFieldValue("GZYPSF"));
-		userData.chgFieldDbValue("WY1_PSIF", transaction.getFieldValue("GZPSIF"));
+		userData.chgFieldDbValue("ZLPSIF", transaction.getFieldValue("GZPSIF"));
+		userData.chgFieldDbValue("WY1_CPI", transaction.getFieldValue("GZCPI"));
 		userData.chgFieldDbValue("WY1_OCY1", transaction.getFieldValue("GZOCY1"));
 		userData.chgFieldDbValue("WY1_OCY2", transaction.getFieldValue("GZOCY2"));
 		userData.chgFieldDbValue("WY1_DIC", transaction.getFieldValue("GZDIC"));
@@ -156,12 +160,23 @@ public class WY1 extends AbstractFunctionAdaptor {
 		userData.chgFieldDbValue("WY1_RRTM", transaction.getFieldValue("GZRRTM"));
 		userData.chgFieldDbValue("WY1_RATM", transaction.getFieldValue("GZRATM"));
 		userData.chgFieldDbValue("WY1_EXFI", transaction.getFieldValue("GZEXFI"));
+		userData.chgFieldDbValue("WY1_AB2", transaction.getFieldValue("GZAB2"));
+		userData.chgFieldDbValue("WY1_AN2", transaction.getFieldValue("GZAN2"));
+		userData.chgFieldDbValue("WY1_AS2", transaction.getFieldValue("GZAS2"));
+		userData.chgFieldDbValue("WY1_EAN2", transaction.getFieldValue("GZEAN2"));
+		userData.chgFieldDbValue("WY1_OAB2", transaction.getFieldValue("GZOAB2"));
+		userData.chgFieldDbValue("WY1_OAN2", transaction.getFieldValue("GZOAN2"));
+		userData.chgFieldDbValue("WY1_OAS2", transaction.getFieldValue("GZOAS2"));
+		userData.chgFieldDbValue("WY1_BBR", transaction.getFieldValue("GZBBR"));
+		userData.chgFieldDbValue("WY1_EXT", transaction.getFieldValue("GZEXT"));
+		userData.chgFieldInputValue("WY1_RATI", transaction.getFieldValue("GZRATI"));
 		
-		userData.chgFieldDbValue("WY1_RRTI", transaction.getFieldValue("GZRRTI"));
-		userData.chgFieldDbValue("WY1_RATI", transaction.getFieldValue("GZRATI"));	
+	
+		LOG.info("Teste WY1_AB2:" +  userData.rtvFieldDbValue("WY1_AB2"));	
+		LOG.info("Teste WY1_AB2:" +  userData.rtvFieldInputValue("WY1_RATI"));
 		}
 		
-			private EquationStandardTransaction AddRDW(JournalHeader journalHeader, UserData userData) throws EQException
+	private EquationStandardTransaction AddRDW(JournalHeader journalHeader, UserData userData) throws EQException
 	{
 		// get session
 		EquationStandardSession session = userData.getUserAccessHandler().getEquationUser().getSession();
@@ -198,16 +213,17 @@ public class WY1 extends AbstractFunctionAdaptor {
 		transaction.setFieldValue("GZBRNM", userData.rtvFieldDbValue("WY1_BRNM"));  //Branch mnemonic                                    
 		transaction.setFieldValue("GZDLP", userData.rtvFieldDbValue("WY1_DLP"));     //Deal type                                          
 		transaction.setFieldValue("GZDLR", userData.rtvFieldDbValue("WY1_DLR"));     //Deal reference 
-		transaction.setFieldValue("GZCUS", userData.rtvFieldDbValue("WY1_CUS"));     //Customer mnemonic                                  
-		transaction.setFieldValue("GZCLC", userData.rtvFieldDbValue("WY1_CLC"));	//Customer location                                  
+		transaction.setFieldValue("GZCUS", userData.rtvFieldDbValue("ZLCUS"));     //Customer mnemonic                                  
+		transaction.setFieldValue("GZCLC", userData.rtvFieldDbValue("WY1_CLC"));
+		transaction.setFieldValue("GZEXT", userData.rtvFieldDbValue("WY1_EXT"));	//Customer location                                  
 		transaction.setFieldValue("GZYPSF", userData.rtvFieldDbValue("WY1_YPSF"));	//Exclude from positions?                            
 		transaction.setFieldValue("GZGRP", userData.rtvFieldDbValue("WY1_GRP")); 	//Group name                                         
 		transaction.setFieldValue("GZDIC", userData.rtvFieldDbValue("WY1_DIC"));   //Deal interest characteristic; V=Var, F=Fix, D=Dis
 		transaction.setFieldValue("GZTDT", userData.rtvFieldDbValue("WY1_TDT")); 	//Term deal type; L=Loan, D=Deposit                  
-		transaction.setFieldValue("GZPCCY", userData.rtvFieldDbValue("WY1_PCCY"));	//Deal currency
-		transaction.setFieldValue("GZCCY1", userData.rtvFieldDbValue("WY1_CCY1")); 	//Principal withdrawal currency 
-		transaction.setFieldValue("GZCCY2", userData.rtvFieldDbValue("WY1_CCY2")); 	//Interest withdrawal currency 
-		transaction.setFieldValue("GZDLA", userData.rtvFieldDbValue("WY1_DLA"));	//Principal amount
+		transaction.setFieldValue("GZPCCY", userData.rtvFieldDbValue("ZLPCCY"));	//Deal currency
+		transaction.setFieldValue("GZCCY1", userData.rtvFieldDbValue("ZLCCY1")); 	//Principal withdrawal currency 
+		transaction.setFieldValue("GZCCY2", userData.rtvFieldDbValue("ZLCCY2")); 	//Interest withdrawal currency 
+		transaction.setFieldValue("GZDLA", userData.rtvFieldDbValue("ZLDLA"));	//Principal amount
 		transaction.setFieldValue("GZIA", userData.rtvFieldDbValue("WY1_IA"));     //Interest amount                                                                  
 		transaction.setFieldValue("GZTIA", userData.rtvFieldDbValue("WY1_TIA"));	//Tax on interest 
 		transaction.setFieldValue("GZSDTE", userData.rtvFieldDbValue("WY1_SDTE"));	//Start date   
@@ -219,13 +235,13 @@ public class WY1 extends AbstractFunctionAdaptor {
 		transaction.setFieldValue("GZCBRR",userData.rtvFieldDbValue("WY1_CBRR"));
 		transaction.setFieldValue("GZCDRR",userData.rtvFieldDbValue("WY1_CDRR"));
 		transaction.setFieldValue("GZCRTM",userData.rtvFieldDbValue("WY1_CRTM"));
-		transaction.setFieldValue("GZIRT",userData.rtvFieldDbValue("WY1_IRT"));
+		transaction.setFieldValue("GZCIRT",userData.rtvFieldDbValue("WY1_CIRT"));
 		transaction.setFieldValue("GZCPEG",userData.rtvFieldDbValue("WY1_CPEG"));
-		transaction.setFieldValue("GZEBRR",userData.rtvFieldDbValue("WY1_EBRR"));
-		transaction.setFieldValue("GZEDRR",userData.rtvFieldDbValue("WY1_EDRR"));
-		transaction.setFieldValue("GZERTM",userData.rtvFieldDbValue("WY1_ERTM"));
-		transaction.setFieldValue("GZEART",userData.rtvFieldDbValue("WY1_EART"));
-		transaction.setFieldValue("GZEPEG",userData.rtvFieldDbValue("WY1_EPEG"));
+		transaction.setFieldValue("GZEBRR",userData.rtvFieldDbValue("ZLEBRR"));
+		transaction.setFieldValue("GZEDRR",userData.rtvFieldDbValue("ZLEDRR"));
+		transaction.setFieldValue("GZERTM",userData.rtvFieldDbValue("ZLERTM"));
+		transaction.setFieldValue("GZEART",userData.rtvFieldDbValue("ZLEART"));
+		transaction.setFieldValue("GZEPEG",userData.rtvFieldDbValue("ZLEPEG"));
 		transaction.setFieldValue("GZCCD1",userData.rtvFieldDbValue("WY1_CCD1"));
 		transaction.setFieldValue("GZPAM1",userData.rtvFieldDbValue("WY1_PAM1"));
 		transaction.setFieldValue("GZCCD2",userData.rtvFieldDbValue("WY1_CCD2"));
@@ -233,20 +249,20 @@ public class WY1 extends AbstractFunctionAdaptor {
 		transaction.setFieldValue("GZCCD3",userData.rtvFieldDbValue("WY1_CCD3"));
 		transaction.setFieldValue("GZPAM3",userData.rtvFieldDbValue("WY1_PAM3"));
 		transaction.setFieldValue("GZWA",userData.rtvFieldDbValue("WY1_WA"));
-		transaction.setFieldValue("GZXM",userData.rtvFieldDbValue("WY1_XM"));
+		transaction.setFieldValue("GZXMM",userData.rtvFieldDbValue("WY1_XMM"));
 		transaction.setFieldValue("GZDPAM",userData.rtvFieldDbValue("WY1_DPAM"));
 		transaction.setFieldValue("GZDIAM",userData.rtvFieldDbValue("WY1_DIAM"));
 		transaction.setFieldValue("GZWPAM",userData.rtvFieldDbValue("WY1_WPAM"));
 		 transaction.setFieldValue("GZWIAM",userData.rtvFieldDbValue("WY1_WIAM"));
-		 transaction.setFieldValue("GZCWF1",userData.rtvFieldDbValue("WY1_CWF1"));
-		 transaction.setFieldValue("GZCWF2",userData.rtvFieldDbValue("WY1_CWF2"));
-		 transaction.setFieldValue("GZAB",userData.rtvFieldDbValue("WY1_AB"));
-		 transaction.setFieldValue("GZAN",userData.rtvFieldDbValue("WY1_AN"));
-		 transaction.setFieldValue("GZAS",userData.rtvFieldDbValue("WY1_AS"));
+		 transaction.setFieldValue("GZCWF1",userData.rtvFieldDbValue("ZLCWF1"));
+		 transaction.setFieldValue("GZCWF2",userData.rtvFieldDbValue("ZLCWF2"));
+		 transaction.setFieldValue("GZAB",userData.rtvFieldDbValue("ZLAB"));
+		 transaction.setFieldValue("GZAN",userData.rtvFieldDbValue("ZLAN"));
+		 transaction.setFieldValue("GZAS",userData.rtvFieldDbValue("ZLAS"));
 		 transaction.setFieldValue("GZEAN",userData.rtvFieldDbValue("WY1_EAN"));
-		 transaction.setFieldValue("GZAB1",userData.rtvFieldDbValue("WY1_AB1"));
-		 transaction.setFieldValue("GZAN1",userData.rtvFieldDbValue("WY1_AN1"));
-		 transaction.setFieldValue("GZAS1",userData.rtvFieldDbValue("WY1_AS1"));
+		 transaction.setFieldValue("GZAB1",userData.rtvFieldDbValue("ZLAB1"));
+		 transaction.setFieldValue("GZAN1",userData.rtvFieldDbValue("ZLAN1"));
+		 transaction.setFieldValue("GZAS1",userData.rtvFieldDbValue("ZLAS1"));
 		 transaction.setFieldValue("GZEAN1",userData.rtvFieldDbValue("WY1_EAN1"));
 		 transaction.setFieldValue("GZOAB",userData.rtvFieldDbValue("WY1_OAB"));
 		 transaction.setFieldValue("GZOAN",userData.rtvFieldDbValue("WY1_OAN"));
@@ -254,10 +270,10 @@ public class WY1 extends AbstractFunctionAdaptor {
 		 transaction.setFieldValue("GZOAB1",userData.rtvFieldDbValue("WY1_OAB1"));
 		 transaction.setFieldValue("GZOAN1",userData.rtvFieldDbValue("WY1_OAN1"));
 		 transaction.setFieldValue("GZOAS1",userData.rtvFieldDbValue("WY1_OAS1"));		
-		 transaction.setFieldValue("GZPRTC",userData.rtvFieldDbValue("WY1_PRTC"));
+		 transaction.setFieldValue("GZPRTC",userData.rtvFieldDbValue("ZLPRTC"));
 		 transaction.setFieldValue("GZCANR",userData.rtvFieldDbValue("WY1_CANR"));
 		 transaction.setFieldValue("GZYPSF",userData.rtvFieldDbValue("WY1_YPSF"));
-		 transaction.setFieldValue("GZPSIF",userData.rtvFieldDbValue("WY1_PSIF"));
+		 transaction.setFieldValue("GZPSIF",userData.rtvFieldDbValue("ZLPSIF"));
 		 transaction.setFieldValue("GZOCY1",userData.rtvFieldDbValue("WY1_OCY1"));
 		 transaction.setFieldValue("GZOCY2",userData.rtvFieldDbValue("WY1_OCY2"));
 		 transaction.setFieldValue("GZDIC",userData.rtvFieldDbValue("WY1_DIC"));
@@ -276,14 +292,17 @@ public class WY1 extends AbstractFunctionAdaptor {
 		
 		 transaction.setFieldValue("GZRRTI",userData.rtvFieldDbValue("WY1_RRTI"));
 		 transaction.setFieldValue("GZRATI",userData.rtvFieldDbValue("WY1_RATI"));	
-		
+		 transaction.setFieldValue("GZF0MR","N");
+		 transaction.setFieldValue("GZF0R","Y");	
+		LOG.info("Teste2 WY1_AB2:" +  userData.rtvFieldDbValue("WY1_AB2"));	
+		LOG.info("Teste2 WY1_AB2:" +  userData.rtvFieldInputValue("WY1_RATI"));
 		               
 		
 	}
 	/**
 	 * Allows bank to perform update processing after the standard Equation update.
 	 */
-	 /*
+	 
 	@Override
 	public void postUpdate(JournalHeader journalHeader, UserData userData) {
 	try
@@ -310,7 +329,8 @@ public class WY1 extends AbstractFunctionAdaptor {
 		finally
 		{
 		}	
-	}*/
+	}
+	
 	
 	
 }
